@@ -1,17 +1,12 @@
-import express, { NextFunction } from 'express'
-import cors from 'cors'
-import bodyParser from 'body-parser'
+import * as express from 'express'
+import * as cors from 'cors'
+import * as bodyParser from 'body-parser'
 import 'express-async-errors'
 
 import { errorHandler } from './middleware/error'
 import routes from './routes'
 
 const PORT = process.env.PORT || 9000;
-
-function xxx(req: Request, res: Response, next: NextFunction): void {
-  console.log('con cat', req, res, next)
-  next()
-}
 
 (async () => {
   const app = express()

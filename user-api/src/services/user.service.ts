@@ -1,7 +1,7 @@
-import bcrypt from "bcrypt"
-import { PrismaClient } from '@prisma/client';
-import { InternalException } from '../common/exceptions'
-import { User } from '../models/user.model';
+import * as bcrypt from 'bcrypt'
+import { PrismaClient } from '@prisma/client'
+import { InternalException, NewBadRequestErr, NewInternalServerErr, NewRecordNotfoundErr } from '../common/exceptions'
+import { User } from '../models/user.model'
 
 const prisma = new PrismaClient()
 const serviceName = 'user-service'
@@ -10,26 +10,29 @@ export interface RegisterInput {
   email: string;
   username: string;
   password: string;
-  image?: string;
   bio?: string;
+}
+
+export interface UpdateInput {
+  bio: string
 }
 
 export const createUser = async (input: RegisterInput): Promise<User> => {
   const email = input.email?.trim();
   const username = input.username?.trim();
   const password = input.password?.trim();
-  const { image, bio } = input;
+  const { bio } = input;
 
   if (!email) {
-    throw new InternalException(serviceName, 422, { errors: { email: ["can't be blank"] } });
+    throw NewBadRequestErr(serviceName, { errors: { email: ["can't be blank"] } });
   }
 
   if (!username) {
-    throw new InternalException(serviceName, 422, { errors: { username: ["can't be blank"] } });
+    throw NewBadRequestErr(serviceName, { errors: { username: ["can't be blank"] } })
   }
 
   if (!password) {
-    throw new InternalException(serviceName, 422, { errors: { password: ["can't be blank"] } });
+    throw NewBadRequestErr(serviceName, { errors: { password: ["can't be blank"] } });
   }
 
   await checkUserUniqueness(email, username);
@@ -41,7 +44,6 @@ export const createUser = async (input: RegisterInput): Promise<User> => {
       username,
       email,
       password: hashedPassword,
-      ...(image ? { image } : {}),
       ...(bio ? { bio } : {}),
     },
     select: {
@@ -55,6 +57,34 @@ export const createUser = async (input: RegisterInput): Promise<User> => {
 
   return user;
 };
+
+export const updateUser = async (id: number, update: UpdateInput): Promise<User> => {
+  const user = await prisma.user.update({
+    where: {
+      id: id,
+    },
+    data: {
+      bio: update.bio,
+    }
+  })
+  return user
+}
+
+export const getUserByID = async (id: number): Promise<User> => {
+  return getUserOrThrow(id)
+}
+
+const getUserOrThrow = async (id: number): Promise<User> => {
+  const user = await prisma.user.findUnique({
+    where: {
+      id: id,
+    }
+  })
+  if (!user) {
+    throw NewRecordNotfoundErr(serviceName, { errors: { message: "user not found" } })
+  }
+  return user
+}
 
 const checkUserUniqueness = async (email: string, username: string) => {
   const existingUserByEmail = await prisma.user.findUnique({
@@ -76,7 +106,7 @@ const checkUserUniqueness = async (email: string, username: string) => {
   });
 
   if (existingUserByEmail || existingUserByUsername) {
-    throw new InternalException(serviceName ,422, {
+    throw NewBadRequestErr(serviceName, {
       errors: {
         ...(existingUserByEmail ? { email: ['has already been taken'] } : {}),
         ...(existingUserByUsername ? { username: ['has already been taken'] } : {}),
