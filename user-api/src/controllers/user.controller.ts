@@ -26,7 +26,9 @@ router.get('/users/:id', async (req: Request, res: Response, next: NextFunction)
 router.put('/users/:id', async (req: Request, res: Response, next: NextFunction) => {
   try {
     const id = req.params.id
-    const user = await userService.getUserByID(parseInt(id))
+    const user = await userService.updateUser(parseInt(id), {
+      bio: req.body.bio,
+    })
     res.json(contract.UserResponse(user));
   } catch (err) {
     next(err)
