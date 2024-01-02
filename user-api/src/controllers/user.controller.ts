@@ -34,4 +34,13 @@ router.put('/users/:id', async (req: Request, res: Response, next: NextFunction)
     next(err)
   } 
 })
+
+router.post('/user/validate', async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    userService.validateUser(req.body.email, req.body.password)
+  } catch (err) {
+    next(err)
+  } 
+})
+
 export default router;

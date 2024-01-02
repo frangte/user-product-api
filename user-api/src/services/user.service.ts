@@ -70,6 +70,22 @@ export const updateUser = async (id: number, update: UpdateInput): Promise<User>
   return user
 }
 
+export const validateUser = async (email: string, password: string): Promise<boolean> => {
+  const user = await prisma.user.findUnique({
+    where: {
+      email: email,
+    },
+    select: {
+      email: true,
+      password: true
+    },
+  })
+  if (!user) {
+    return false
+  }
+  return bcrypt.compareSync(password, user.password)
+}
+
 export const getUserByID = async (id: number): Promise<User> => {
   return getUserOrThrow(id)
 }

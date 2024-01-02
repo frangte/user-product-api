@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "ts-node ./src/index.ts",
-    "build": ""
+    "build": "tsc --project tsconfig.json"
   },
   "dependencies": {
     "@prisma/client": "5.7.1",
