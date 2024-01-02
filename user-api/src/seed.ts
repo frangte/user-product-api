@@ -1,7 +1,6 @@
-import { faker } from '@faker-js/faker';
+import { faker } from '@faker-js/faker'
 import * as userService from './services/user.service'
-import { RegisterInput } from './services/user.service'
-
+import type { RegisterInput } from './services/user.service'
 
 (async () => {
   faker.seed(Date.now())

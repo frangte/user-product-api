@@ -1,14 +1,14 @@
-import { User } from '../../models/user.model'
+import type { User } from '../../models/user.model'
 
 export interface ResponseData {
   data: any
 }
 
 export interface UserContract {
-  id: number;
-  username: string;
-  email: string;
-  bio: string | null;
+  id: number
+  username: string
+  email: string
+  bio: string | null
 }
 
 export function UserResponse(user: User): ResponseData {
@@ -18,6 +18,6 @@ export function UserResponse(user: User): ResponseData {
       username: user.username,
       email: user.email,
       bio: user.bio,
-    } as UserContract
+    } as UserContract,
   } as ResponseData
 }

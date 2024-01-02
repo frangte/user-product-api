@@ -16,7 +16,7 @@ export function NewRecordNotfoundErr(service: string, message: string | any): In
 
 export function NewBadRequestErr(service: string, message: string | any): InternalException {
   return new InternalException(service, ErrorCodes.BadRequest, StatusCodes.BAD_REQUEST, message)
-} 
+}
 
 export class InternalException extends Error {
   service: string
