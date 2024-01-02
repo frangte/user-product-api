@@ -7,7 +7,8 @@
     "dev": "ts-node ./src/index.ts",
     "build": "tsc --project tsconfig.json",
     "lint": "eslint .",
-    "fix-lint": "eslint . --fix"
+    "fix-lint": "eslint . --fix",
+    "seed": "ts-node ./src/seed.ts"
   },
   "dependencies": {
     "@prisma/client": "5.7.1",
