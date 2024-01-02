@@ -1,0 +1,48 @@
+[
+  {
+    "model": "product.product",
+    "pk": "a9d0c6b0-ba38-11eb-8b4e-bd5f3d3c3b3d",
+    "fields": {
+      "id": "a9d0c6b0-ba38-11eb-8b4e-bd5f3d3c3b3d",
+      "label": "Product 1",
+      "description": "This is product 1",
+      "quantity": 10,
+      "created_at": "2022-01-01T00:00:00Z",
+      "updated_at": "2022-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "product.product",
+    "pk": "a9d0c6b0-ba38-11eb-8b4e-bd5f3d3c3b3e",
+    "fields": {
+      "id": "a9d0c6b0-ba38-11eb-8b4e-bd5f3d3c3b3e",
+      "label": "Product 2",
+      "description": "This is product 2",
+      "quantity": 20,
+      "created_at": "2022-01-02T00:00:00Z",
+      "updated_at": "2022-01-02T00:00:00Z"
+    }
+  },
+  {
+    "model": "product.order",
+    "pk": "a9d0c6b0-ba38-11eb-8b4e-bd5f3d3c3b3f",
+    "fields": {
+      "id": "a9d0c6b0-ba38-11eb-8b4e-bd5f3d3c3b3f",
+      "user_id": 1,
+      "product": "a9d0c6b0-ba38-11eb-8b4e-bd5f3d3c3b3d",
+      "created_at": "2022-01-03T00:00:00Z",
+      "updated_at": "2022-01-03T00:00:00Z"
+    }
+  },
+  {
+    "model": "product.order",
+    "pk": "a9d0c6b0-ba38-11eb-8b4e-bd5f3d3c3b40",
+    "fields": {
+      "id": "a9d0c6b0-ba38-11eb-8b4e-bd5f3d3c3b40",
+      "user_id": 2,
+      "product": "a9d0c6b0-ba38-11eb-8b4e-bd5f3d3c3b3e",
+      "created_at": "2022-01-04T00:00:00Z",
+      "updated_at": "2022-01-04T00:00:00Z"
+    }
+  }
+]

@@ -1,13 +1,17 @@
 from django.db import models
 
-
-class Category(models.Model):
-    id = models.UUIDField(primary_key=True)
-    name = models.CharField(max_length=100)
-
-
 class Product(models.Model):
+    id = models.UUIDField(primary_key=True)
     label = models.CharField(max_length=50)
-    description = models.CharField(max_length=200)
-    category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True)
-    quantity = models.IntegerField()
+    description = models.CharField(max_length=512)
+    quantity = models.IntegerField(default=0)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+
+class Order(models.Model):
+    id = models.UUIDField(primary_key=True)
+    user_id = models.IntegerField(null=False)
+    product = models.ForeignKey(Product, on_delete=models.DO_NOTHING, null=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
